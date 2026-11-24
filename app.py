@@ -14,7 +14,7 @@ from google.genai import types
 
 load_dotenv()
 
-MODEL = "gemini-3.8-flash"
+MODEL = "gemini-3.5-flash-lite"
 
 SAMPLES = {
     "-- choose a sample --": "",
