@@ -4,7 +4,7 @@
 
 ## Problem statement
 Writers often struggle to come up with catchy titles. This app takes an article
-or topic and uses an LLM (Gemini 2.5 Flash) to generate 10 headline options,
+or topic and uses an LLM (Gemini 3.8 Flash) to generate 10 headline options,
 each rated 1-10 for clarity, shown in a table sorted from clearest to least clear.
 
 ## How to run
