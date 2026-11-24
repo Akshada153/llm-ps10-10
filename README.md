@@ -19,5 +19,3 @@ streamlit run app.py
 ## Screenshots
 Add 1-2 screenshots here (e.g. `screenshots/output1.png`).
 
-![Output 1](screenshots/output1.png)
-![Output 2](screenshots/output2.png)
