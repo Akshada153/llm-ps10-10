@@ -4,6 +4,7 @@ clarity score (1-10) -> shown in a table sorted by clarity.
 """
 import json
 import os
+import time
 
 import pandas as pd
 import streamlit as st
@@ -67,14 +68,23 @@ def get_client():
 def generate_headlines(text: str, tone: str) -> list[dict]:
     client = get_client()
     prompt = PROMPT_TEMPLATE.format(text=text.strip(), tone=tone)
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            temperature=0.9,
-        ),
+    config = types.GenerateContentConfig(
+        response_mime_type="application/json",
+        temperature=0.9,
     )
+    response = None
+    for attempt in range(4):
+        try:
+            response = client.models.generate_content(
+                model=MODEL, contents=prompt, config=config
+            )
+            break
+        except Exception as e:
+            # Retry on temporary overload (503) or rate limit (429)
+            if ("503" in str(e) or "429" in str(e)) and attempt < 3:
+                time.sleep(2 * (attempt + 1))
+            else:
+                raise
     raw = response.text.strip()
     # Remove code fences if the model adds them
     if raw.startswith("```"):
